@@ -15,36 +15,53 @@ class Chess
 
   def run
     start_game
+    while false
+      puts "NAIVE"
+      puts "Select?"
+      #pos = alpha_to_coords(gets.chomp.upcase)
+
+      @board.draw_board
+    end
     @board.draw_board
+  end
+
+  def alpha_to_coords(alpha)
+    arr = alpha.split("")
+    x = arr[0].ord
+    return
   end
 
   def start_game
     draw_start
   end
-  
+
   def draw_start
     puts "Nice, the game started"
   end
 
+  def register_piece_change(change, piece, pos)
+    if change == "add"
+      #add to squares hash
+      @board.squares[pos].add(piece)
+      #add to pieces hash in players
+      @players[piece.player].add_piece(pos,piece)
+    end
+  end
+
+
   def place_pieces(player)
     raise "name needs to be 1 or 2" until (1..2).include?(player)
-    if player == 1
-      start, dir = [0,0], 1
-    elsif player == 2
-      start, dir = [7,7], -1
-    end
+    player == 1 ? (start, dir = [0,0], 1) : (start, dir = [7,7], -1)
     row1 = ['rook','knight','bishop','queen','king','bishop','knight','rook']
     row2 = Array.new(8,'pawn')
     type_rows = [row1,row2]
     y = start[1]
-    #2 times because each player has two rows of pieces
     type_rows.each {|row|
       x = start[0]
       row.each {|type|
         pos = [x,y]
         piece = Piece.new(player,type)
-        @board.squares[pos].add(piece)
-        @players[player].add_piece(pos,piece)
+        register_piece_change("add", piece, pos)
         x += dir
       }
       y += dir

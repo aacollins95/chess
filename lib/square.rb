@@ -1,4 +1,5 @@
 class Square < Board
+  attr_reader :selected
   def initialize(pos)
     #position is (X,Y)
     @pos = pos

@@ -1,4 +1,4 @@
-class Square
+class Square < Board
   def initialize(pos)
     #position is (X,Y)
     @pos = pos
@@ -37,6 +37,4 @@ class Square
   def select(tf)
     @selected = tf
   end
-
-
 end

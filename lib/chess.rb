@@ -31,6 +31,7 @@ class Chess
         pos = [x,y]
         piece = Piece.new(player,type)
         @board.squares[pos].add(piece)
+        @players[player].add_piece(pos,piece)
         x += dir
       }
       y += dir

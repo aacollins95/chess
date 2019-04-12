@@ -6,8 +6,8 @@ class Player
     @pieces = Hash.new
   end
 
-  def add_piece(piece)
-    
+  def add_piece(pos,piece)
+    @pieces[pos] = piece
   end
 
 end

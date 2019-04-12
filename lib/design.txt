@@ -1,0 +1,40 @@
+Board(display)
+
+8
+7
+6
+5
+4
+3
+2
+1
+  a   b   c   d   e   f   g   h
+
+Board (actual)
+7
+6
+5
+4
+3
+2
+1
+0
+  0 1 2 3 4 5 6 7
+
+Squares
+  unicode 3x3 chars
+  every other is alternate color
+  highlight is unicode double bar
+  should every square have a piece (inlcuding a 'null' piece), or should
+  only occupied sqaures have a piece (each square has an occupied? var)
+  can NOT draw itself
+  Only occupied squares will have a piece (allows a list of pieces)
+  Squares have a position (X,Y) ([0-7],[0-7])
+  some sort of get_neighbors, or advance combination
+  dir != pos!!!!
+
+
+Board
+  8x8 grid of squares
+  creates pieces for each player
+  |

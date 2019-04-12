@@ -6,11 +6,16 @@ class Square
     @selected = false
   end
 
+  def add(piece)
+    @full = true
+    @piece = piece
+    puts "#{piece.type} has been added to #{@pos}"
+  end
+
   def to_s
-    raise "full squares don't work yet" unless (!@full)
-    c = "."
+    #raise "full squares don't work yet" unless (!@full)
     if @full
-      puts "don't touch me leave me alone"
+      c = Unicode.piece(@piece.player,@piece.type)
     else
       c = Unicode.box(self.is_black)
     end

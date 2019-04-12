@@ -1,7 +1,8 @@
 require "./lib/board"
 require "./lib/square"
+require "./lib/unicode"
 
 
-
-board = Board.new
-puts board.squares
+puts Unicode.piece(2,"rook")
+#board = Board.new
+#puts board.squares

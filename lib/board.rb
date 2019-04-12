@@ -10,6 +10,11 @@ class Board
     }
   end
 
-  def draw
+  def draw_board
+    draw_row(0)
+  end
+
+  def draw_row
+  end
 
 end

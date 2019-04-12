@@ -9,16 +9,9 @@ module Unicode
     return pieces[piece][player-1]
   end
 
-  def self.box(sel,pos)
-    #0 1 2
-    #7   3  pos positions in a box
-    #6 5 4
-    raise "'sel' isn't boolean" unless (!!sel == sel)
-    sel = sel ? 1 : 0
-    raise "'pos' is out of range [0-7]" unless ((0..7).include?(pos))
-    pieces = {0=>['┌','┏'], 1=>['─','	━'], 2=>['┐','┓'], 3=>['│','┃'],
-              4=>['┘','┛'], 5=>['─','	━'], 6=>['└','┗'], 7=>['│','┃'],
-    }
-    return pieces[pos][sel]
+  def self.box(filled)
+    raise "'filled' isn't boolean" unless (!!filled == filled)
+    return filled ? '■' : '□'
   end
+
 end

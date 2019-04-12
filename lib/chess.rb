@@ -3,9 +3,7 @@ require "./lib/square"
 require "./lib/unicode"
 
 
-(0..2).each { |i|
-  print Unicode.box(false,i)
-}
-puts " "
-#board = Board.new
-#puts board.squares
+board = Board.new
+pos = [2,5]
+square = board.squares[pos]
+puts square.to_s

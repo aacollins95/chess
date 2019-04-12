@@ -14,7 +14,12 @@ class Board
     draw_row(0)
   end
 
-  def draw_row
+  def draw_row(y)
+    space = " "
+  end
+
+  def draw_empty
+
   end
 
 end

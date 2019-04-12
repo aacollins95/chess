@@ -23,6 +23,7 @@ Board (actual)
 
 Squares
   unicode 3x3 chars
+  MAybe we should just be alternating Whtie square and black square
   every other is alternate color
   highlight is unicode double bar
   should every square have a piece (inlcuding a 'null' piece), or should

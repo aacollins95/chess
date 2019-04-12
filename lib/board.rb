@@ -10,6 +10,7 @@ class Board
     }
   end
 
+  #draw methods and helpers
   def draw_board
     #"\e[#{color}m#{c}\e[0m"
     print "\n" * 15

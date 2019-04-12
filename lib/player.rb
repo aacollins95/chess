@@ -3,10 +3,11 @@ class Player
   def initialize(name)
     @name = name
     puts "Hi, I'm player #{@name}!"
-    @piece = Piece.new(name,"knight")
+    @pieces = Hash.new
   end
 
-  def place_pieces
-
+  def add_piece(piece)
+    
   end
+
 end

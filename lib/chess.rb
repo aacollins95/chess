@@ -8,9 +8,33 @@ class Chess
   def initialize
     @board = Board.new
     @players = {1=>Player.new(1), 2=>Player.new(2)}
-    pos = [3,3]
-    @board.squares[pos].add(@players[2].piece)
+    place_pieces(1)
+    place_pieces(2)
     @board.draw_board
+  end
+
+  def place_pieces(player)
+    raise "name needs to be 1 or 2" until (1..2).include?(player)
+    if player == 1
+      start, dir = [0,0], 1
+    elsif player == 2
+      start, dir = [7,7], -1
+    end
+    row1 = ['rook','knight','bishop','queen','king','bishop','knight','rook']
+    row2 = Array.new(8,'pawn')
+    type_rows = [row1,row2]
+    y = start[1]
+    #2 times because each player has two rows of pieces
+    type_rows.each {|row|
+      x = start[0]
+      row.each {|type|
+        pos = [x,y]
+        piece = Piece.new(player,type)
+        @board.squares[pos].add(piece)
+        x += dir
+      }
+      y += dir
+    }
   end
 end
 

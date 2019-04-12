@@ -1,6 +1,7 @@
 module Unicode
 
   def self.piece(player,piece)
+
     raise "Player isn't 1 or 2" unless (player == 1 or player == 2)
     pieces = {'king'=>['♔','♚'], 'queen'=>['♕','♛'], 'rook'=>['♖','♜'],
               'bishop'=>['♗','♝'], 'knight'=>['♘','♞'], 'pawn'=>['♙','♟']

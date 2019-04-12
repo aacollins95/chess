@@ -16,9 +16,6 @@ class Square
     end
     color = @selected ? "32" : "0"
     return "\e[#{color}m#{c}\e[0m"
-
-
-
   end
 
   def is_black
@@ -31,4 +28,10 @@ class Square
       return !y_even
     end
   end
+
+  def select(tf)
+    @selected = tf
+  end
+
+
 end

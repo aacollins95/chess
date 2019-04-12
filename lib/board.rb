@@ -10,8 +10,8 @@ class Board
     }
   end
 
-
   def draw_board
+
     print "\n" * 15
     (0...@height).reverse_each { |row| draw_row(row)}
     (1..@width).each{ |x| print x.to_s + "   " }
@@ -27,6 +27,8 @@ class Board
   end
 
   def row_to_letter(row)
+    raises "row needs to be in range" until (0...@height).include?(row)
+    #gets letter of a particular
     return ("A".ord + row).chr
   end
 

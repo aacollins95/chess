@@ -11,19 +11,20 @@ class Board
   end
 
   def draw_board
-
+    #"\e[#{color}m#{c}\e[0m"
     print "\n" * 15
     (0...@height).reverse_each { |row| draw_row(row)}
-    (1..@width).each{ |x| print x.to_s + "   " }
+    print "   "
+    (1..@width).each{ |x| print "\e[34m#{x.to_s}\e[0m" + "  " }
     print "\n"
   end
 
   def draw_row(y)
-    size = 3
+    size = 2
     space = " " * size
+    print "\e[34m#{row_to_letter(y)}\e[0m" + space
     (0...@width).each{ |x| print @squares[[x,y]].to_s + space }
-    print row_to_letter(y)
-    print "\n" + "\n" * (size-2)
+    print "\n" + "\n" * (size-1)
   end
 
   def row_to_letter(row)

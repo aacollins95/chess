@@ -5,4 +5,8 @@ class Player
     puts "Hi, I'm player #{@name}!"
     @piece = Piece.new(name,"knight")
   end
+
+  def place_pieces
+
+  end
 end

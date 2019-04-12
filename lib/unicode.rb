@@ -12,7 +12,7 @@ module Unicode
 
   def self.box(filled)
     raise "'filled' isn't boolean" unless (!!filled == filled)
-    return filled ? '■' : '□'
+    return filled ? '◾' : '◽'
   end
 
 end

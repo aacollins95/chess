@@ -8,11 +8,17 @@ class Square
 
   def to_s
     raise "full squares don't work yet" unless (!@full)
+    c = "."
     if @full
       puts "don't touch me leave me alone"
     else
-      return Unicode.box(self.is_black)
+      c = Unicode.box(self.is_black)
     end
+    color = @selected ? "32" : "0"
+    return "\e[#{color}m#{c}\e[0m"
+
+
+
   end
 
   def is_black

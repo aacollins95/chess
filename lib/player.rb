@@ -3,6 +3,6 @@ class Player
   def initialize(name)
     @name = name
     puts "Hi, I'm player #{@name}!"
-    @piece = Piece.new(name,"king")
+    @piece = Piece.new(name,"knight")
   end
 end

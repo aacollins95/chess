@@ -9,7 +9,7 @@ class Square < Board
   def add(piece)
     @full = true
     @piece = piece
-    puts "#{piece.type} has been added to #{@pos}"
+    #puts "#{piece.type} has been added to #{@pos}"
   end
 
   def to_s

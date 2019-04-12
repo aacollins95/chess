@@ -8,9 +8,22 @@ class Chess
   def initialize
     @board = Board.new
     @players = {1=>Player.new(1), 2=>Player.new(2)}
-    place_pieces(1)
-    place_pieces(2)
+    @players.each do |name,player| place_pieces(name) end
+    run
+
+  end
+
+  def run
+    start_game
     @board.draw_board
+  end
+
+  def start_game
+    draw_start
+  end
+  
+  def draw_start
+    puts "Nice, the game started"
   end
 
   def place_pieces(player)

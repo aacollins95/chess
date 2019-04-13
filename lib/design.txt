@@ -41,7 +41,17 @@ Board
   |
 
 TO FIX
-  make input less naive
-  make pawns move two on first turn
+  make input less naive (done)
+  make pawns move two on first turn (done)
   pawns capture diagonally
-  black pawns should move down
+  black pawns should move down(done)
+  you can pick pieces that can't move,unending loop
+  checkmate wont trigger if king can move to occupied square
+
+TO DO
+  Save functionality
+    opening screen
+    maybe get_input should be more modular, (allow save and return)
+  Check check/mate
+    check: king_pos in list of other players possible moves (done)
+    mate: king_moves all in other players possible moves

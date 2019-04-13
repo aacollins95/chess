@@ -1,5 +1,6 @@
 class Piece < Square
   attr_reader :type, :player, :move_type
+  attr_accessor :moved
 
   def initialize(player, type)
     @player = player
@@ -8,12 +9,16 @@ class Piece < Square
     #unecessary, but saving constant data is efficient
     @dirs = get_dirs
     @move_type = get_move_type
+    @moved = false
   end
 
   def get_dirs
     case @type
     when 'pawn'
-      return player == 1 ? [[0,1]] : [[0,-1]]
+      mod = player == 1 ? 1 : -1
+      dirs = [[0,1*mod]]
+      dirs.push([0,2*mod]) if !@moved
+      return dirs
     when 'rook'
       return [[0,+1],[+1,0],[0,-1],[-1,0]]
     when 'knight'

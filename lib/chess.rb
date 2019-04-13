@@ -24,7 +24,6 @@ class Chess
     status = "unselected"
     player = @players[1]
     while true
-
       if status == 'unselected'
         puts "Player?"
         player = @players[gets.chomp.to_i]
@@ -54,6 +53,7 @@ class Chess
     op_moves = player_moves(other_player)
     if op_moves.include?(pos)
       puts "Player #{player.name} is in CHECK"
+      #check_checkmate
       mate = get_moves(king[pos],pos).all? { |pos| op_moves.include?(pos) }
       puts "CHECKMATE" if mate
     end
@@ -62,7 +62,7 @@ class Chess
   end
 
   def check_checkmate
-    
+    #i'll do something when I'm good and ready
   end
 
   def player_moves(player)
@@ -80,6 +80,8 @@ class Chess
     toggle_moves(pos)
     piece = @board.squares[pos].piece
     move_sqr = @board.squares[move]
+    #makes pawns move one space only
+    piece.moved = true if piece.type == 'pawn' && !piece.moved
     if move_sqr.full
       #removes the current piece in the move square
       register_piece_change('remove', move_sqr.piece, move)

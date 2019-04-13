@@ -42,4 +42,6 @@ Board
 
 TO FIX
   make input less naive
-  
+  make pawns move two on first turn
+  pawns capture diagonally
+  black pawns should move down

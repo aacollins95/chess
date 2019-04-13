@@ -13,7 +13,7 @@ class Piece < Square
   def get_dirs
     case @type
     when 'pawn'
-      return [[0,+1]]
+      return player == 1 ? [[0,1]] : [[0,-1]]
     when 'rook'
       return [[0,+1],[+1,0],[0,-1],[-1,0]]
     when 'knight'

@@ -13,22 +13,7 @@ class Chess
     register_piece_change('add',piece,[3,4])
     run
     #debug
-    MAKE NEW PIECE IN VARIOUS SPOTS TO TEST GETMOVES
 
-  end
-
-  def debug
-    start_game
-    @board.draw_board
-    while true
-      puts "Select?"
-      pos = alpha_to_coords(gets.chomp.upcase)
-      @board.squares[pos].select_tog
-      get_moves(@board.squares[pos],pos).each do |move|
-        @board.squares[pos].select_tog
-      end
-      @board.draw_board
-    end
   end
 
 
@@ -36,19 +21,57 @@ class Chess
   def run
     start_game
     @board.draw_board
+    status = "unselected"
+    player = @players[1]
     while true
-      puts "NAIVE"
-      puts "Select?"
-      pos = alpha_to_coords(gets.chomp.upcase)
-      @board.squares[pos].select_tog
-      get_moves(@board.squares[pos].piece,pos).each do |move|
-        print move
-        print "\n"
-        @board.squares[move].select_tog
+      if status == 'unselected'
+        puts "Choose piece to move"
+        pos = get_input(player.pieces)
+        toggle_moves(pos)
+        status = 'selected'
+      elsif status == 'selected'
+        puts "Choose a move"
+        move = get_input(get_moves(@board.squares[pos].piece,pos))
+        move_piece(player,pos,move)
+        status = 'unselected'
       end
-
       @board.draw_board
     end
+  end
+
+  def move_piece(player,pos,move)
+    toggle_moves(pos)
+    piece = @board.squares[pos].piece
+    move_sqr = @board.squares[move]
+    if move_sqr.full
+      #removes the current piece in the move square
+      register_piece_change('remove', move_sqr.piece, move)
+    end
+    register_piece_change('add', piece, move)
+    register_piece_change('remove',piece, pos)
+  end
+
+
+  def toggle_moves(pos)
+    @board.squares[pos].select_tog
+    get_moves(@board.squares[pos].piece,pos).each do |move|
+      @board.squares[move].select_tog
+    end
+  end
+
+  def get_input(options)
+    #make parameter 'options' that contains valid positions
+    valid = false
+    until valid
+      raw = gets.chomp.upcase
+      if raw.length == 2 && !raw.match(/[A-H][1-8]/).nil? &&
+         options.include?(alpha_to_coords(raw))
+        valid = true
+      else
+        puts "invalid"
+      end
+    end
+    return alpha_to_coords(raw)
   end
 
   def alpha_to_coords(alpha)
@@ -73,6 +96,11 @@ class Chess
       @board.squares[pos].add(piece)
       #add to pieces hash in players
       @players[piece.player].add_piece(pos,piece)
+    elsif change == "remove"
+      #add to squares hash
+      @board.squares[pos].remove(piece)
+      #add to pieces hash in players
+      @players[piece.player].del_piece(pos,piece)
     end
   end
 

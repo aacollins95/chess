@@ -13,6 +13,12 @@ class Square < Board
     #puts "#{piece.type} has been added to #{@pos}"
   end
 
+  def remove(piece)
+    @full = false
+    @piece = nil
+    #puts "#{piece.type} has been added to #{@pos}"
+  end
+
   def to_s
     #raise "full squares don't work yet" unless (!@full)
     if @full

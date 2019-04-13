@@ -10,4 +10,8 @@ class Player
     @pieces[pos] = piece
   end
 
+  def del_piece(pos, piece)
+    @pieces.delete(pos)
+  end
+
 end

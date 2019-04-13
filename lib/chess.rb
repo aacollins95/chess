@@ -24,6 +24,7 @@ class Chess
     status = "unselected"
     player = @players[1]
     while true
+      check_check(player)
       if status == 'unselected'
         puts "Choose piece to move"
         pos = get_input(player.pieces)
@@ -39,6 +40,9 @@ class Chess
     end
   end
 
+  def check_check(player)
+
+
   def move_piece(player,pos,move)
     toggle_moves(pos)
     piece = @board.squares[pos].piece
@@ -53,6 +57,7 @@ class Chess
 
 
   def toggle_moves(pos)
+    #highlights the current position and all possible moves
     @board.squares[pos].select_tog
     get_moves(@board.squares[pos].piece,pos).each do |move|
       @board.squares[move].select_tog
@@ -75,6 +80,7 @@ class Chess
   end
 
   def alpha_to_coords(alpha)
+    #turns a coor of the form char,num into the correpsonding x,y
     arr = alpha.split("")
     x = arr[0].ord-"A".ord
     #minus one because shown coords go from 1-8
@@ -91,6 +97,7 @@ class Chess
   end
 
   def register_piece_change(change, piece, pos)
+    #whenever a piece state changes, tells the board and the players
     if change == "add"
       #add to squares hash
       @board.squares[pos].add(piece)
@@ -105,6 +112,8 @@ class Chess
   end
 
   def get_moves(piece,pos)
+    #gets a list of the moves that a piece can make
+    #no collision with teammates and must be on board
     moves = []
     piece.get_dirs.each { |dir|
       next_pos = advance(pos,dir)
@@ -120,6 +129,7 @@ class Chess
   end
 
   def advance(pos,dir)
+    #gets the position a direction away from a pos
     return [pos[0]+dir[0],pos[1]+dir[1]]
   end
 
@@ -128,6 +138,7 @@ class Chess
   end
 
   def no_teammate(pos,piece)
+    #is there not a teammate in this position
     raise "this piece ain't on the board bruh" until on_board(pos)
     player = piece.player
     sqr_to_check = @board.squares[pos]
@@ -154,6 +165,7 @@ class Chess
 
 
   def place_pieces(player)
+    #initilaization function, puts the pieces in the starting squares
     raise "name needs to be 1 or 2" until (1..2).include?(player)
     player == 1 ? (start, dir = [0,0], 1) : (start, dir = [7,7], -1)
     row1 = ['rook','knight','bishop','queen','king','bishop','knight','rook']

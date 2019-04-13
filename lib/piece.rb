@@ -4,6 +4,8 @@ class Piece < Square
   def initialize(player, type)
     @player = player
     @type = type
+    #dirs and gmt might not be wholly necessary
+    #unecessary, but saving constant data is efficient
     @dirs = get_dirs
     @move_type = get_move_type
   end

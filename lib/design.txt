@@ -39,3 +39,7 @@ Board
   8x8 grid of squares
   creates pieces for each player
   |
+
+TO FIX
+  make input less naive
+  

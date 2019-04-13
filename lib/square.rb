@@ -1,5 +1,5 @@
 class Square < Board
-  attr_reader :selected
+  attr_reader :selected, :full, :piece
   def initialize(pos)
     #position is (X,Y)
     @pos = pos
@@ -37,5 +37,9 @@ class Square < Board
 
   def select(tf)
     @selected = tf
+  end
+
+  def select_tog
+    @selected = !@selected
   end
 end

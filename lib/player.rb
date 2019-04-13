@@ -1,5 +1,5 @@
 class Player
-  attr_reader :piece
+  attr_reader :piece, :pieces
   def initialize(name)
     @name = name
     #puts "Hi, I'm player #{@name}!"

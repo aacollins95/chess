@@ -24,8 +24,10 @@ class Chess
     status = "unselected"
     player = @players[1]
     while true
-      check_check(player)
+
       if status == 'unselected'
+        puts "Player?"
+        player = @players[gets.chomp.to_i]
         puts "Choose piece to move"
         pos = get_input(player.pieces)
         toggle_moves(pos)
@@ -37,13 +39,44 @@ class Chess
         status = 'unselected'
       end
       @board.draw_board
+      #CHANGE_PLAYER
+      check_check(player)
     end
   end
 
   def check_check(player)
+    #player is the one whose turn it's about to be (in run)
+    mate = false
+    other_player = player.name == 1 ? @players[2] : @players[1]
+    king = Hash.new
+    player.pieces.each { |pos,piece| king[pos] = piece if piece.type == 'king' }
+    pos = king.keys[0]
+    op_moves = player_moves(other_player)
+    if op_moves.include?(pos)
+      puts "Player #{player.name} is in CHECK"
+      mate = get_moves(king[pos],pos).all? { |pos| op_moves.include?(pos) }
+      puts "CHECKMATE" if mate
+    end
+    #get_moves(king[pos],pos)
+    return mate
+  end
+
+  def check_checkmate
+    
+  end
+
+  def player_moves(player)
+    moves = []
+    player.pieces.each { |pos,piece|
+      moves.concat(get_moves(piece,pos))
+    }
+    return moves
+  end
+
 
 
   def move_piece(player,pos,move)
+    #moves a players piece at a position to a new one
     toggle_moves(pos)
     piece = @board.squares[pos].piece
     move_sqr = @board.squares[move]

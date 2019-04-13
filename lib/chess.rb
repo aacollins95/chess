@@ -21,21 +21,21 @@ class Chess
   def run
     start_game
     @board.draw_board
-    status = "unselected"
+    @status = "unselected"
     player = @players[1]
     while true
-      if status == 'unselected'
+      if @status == 'unselected'
         puts "Player?"
         player = @players[gets.chomp.to_i]
-        puts "Choose piece to move"
+        puts "Choose piece to move, 'save' to save game"
         pos = get_input(player.pieces)
         toggle_moves(pos)
-        status = 'selected'
-      elsif status == 'selected'
-        puts "Choose a move"
+        @status = 'selected'
+      elsif @status == 'selected'
+        puts "Choose a move, 'save' to save game"
         move = get_input(get_moves(@board.squares[pos].piece,pos))
         move_piece(player,pos,move)
-        status = 'unselected'
+        @status = 'unselected'
       end
       @board.draw_board
       #CHANGE_PLAYER
@@ -104,15 +104,29 @@ class Chess
     valid = false
     until valid
       raw = gets.chomp.upcase
+      save_game if raw == 'SAVE'
       if raw.length == 2 && !raw.match(/[A-H][1-8]/).nil? &&
-         options.include?(alpha_to_coords(raw))
-        valid = true
+        options.include?(alpha_to_coords(raw))
+        pos = alpha_to_coords(raw)
+        case @status
+        when 'unselected'
+          piece = @board.squares[pos].piece
+          if get_moves(piece,pos).length > 0
+            valid = true
+          else
+            puts "invalid"
+          end
+        when 'selected'
+          valid = true
+        end
       else
         puts "invalid"
       end
     end
     return alpha_to_coords(raw)
   end
+
+
 
   def alpha_to_coords(alpha)
     #turns a coor of the form char,num into the correpsonding x,y
@@ -125,10 +139,33 @@ class Chess
 
   def start_game
     draw_start
+    valid = false
+    until valid
+      raw = gets.chomp
+      if raw == 'l'
+        load_game
+        valid = true
+      elsif raw == 'n'
+        valid = true
+      else
+        puts "c'mon, ya got two options fam"
+      end
+    end
+  end
+
+  def load_game
+    puts "I'd load a game"
+  end
+
+  def save_game
+    puts "I'd save a game"
+    gets.chomp
   end
 
   def draw_start
-    puts "Nice, the game started"
+    print "\n"*30
+    puts "Welcome to Console Chess!"
+    puts "l: load saved game, n: start new game"
   end
 
   def register_piece_change(change, piece, pos)

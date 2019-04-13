@@ -3,6 +3,7 @@ require "./lib/square"
 require "./lib/unicode"
 require "./lib/player"
 require "./lib/piece"
+require 'yaml'
 
 class Chess
   def initialize
@@ -31,7 +32,7 @@ class Chess
         puts "Choose piece to move, 'save' to save game"
         if !@checkmate
           pos = get_input(player.pieces)
-          toggle_moves(pos)
+          toggle_moves(pos) if !@checkmate
         end
         @status = 'selected'
       elsif @status == 'selected'
@@ -110,7 +111,6 @@ class Chess
     valid = false
     until valid
       raw = gets.chomp.upcase
-      save_game if raw == 'SAVE'
       if raw.length == 2 && !raw.match(/[A-H][1-8]/).nil? &&
         options.include?(alpha_to_coords(raw))
         pos = alpha_to_coords(raw)
@@ -125,6 +125,9 @@ class Chess
         when 'selected'
           valid = true
         end
+      elsif raw == 'SAVE'
+        save_game
+        valid =true
       else
         puts "invalid"
       end
@@ -160,12 +163,26 @@ class Chess
   end
 
   def load_game
-    puts "I'd load a game"
+    data = YAML.load(File.open('save.yaml','r').read)
+    @board.load_board(data[:board])
+    @players[1].load_pieces(data[:player_1_pieces])
+    @players[2].load_pieces(data[:player_2_pieces])
   end
 
   def save_game
-    puts "I'd save a game"
-    gets.chomp
+    #saves variables as a yaml string
+    puts "saving..."
+    data = YAML.dump ({
+      :board => @board.squares,
+      :player_1_pieces => @players[1].pieces,
+      :player_2_pieces => @players[2].pieces
+    })
+
+    file = File.open("save.yaml","w")
+    file.puts data
+    file.close
+    puts "Game saved!"
+    @checkmate = true
   end
 
   def draw_start

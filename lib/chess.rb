@@ -9,8 +9,7 @@ class Chess
     @board = Board.new
     @players = {1=>Player.new(1), 2=>Player.new(2)}
     @players.each do |name,player| place_pieces(name) end
-    piece = Piece.new(1,'queen')
-    register_piece_change('add',piece,[3,4])
+    @checkmate = false
     run
     #debug
 
@@ -22,24 +21,27 @@ class Chess
     start_game
     @board.draw_board
     @status = "unselected"
-    player = @players[1]
-    while true
+    plr = 1
+    while !@checkmate
+      puts plr
       if @status == 'unselected'
-        puts "Player?"
-        player = @players[gets.chomp.to_i]
+        player = @players[plr]
+        check_check(player)
+        puts "Player #{plr}'s turn"
         puts "Choose piece to move, 'save' to save game"
-        pos = get_input(player.pieces)
-        toggle_moves(pos)
+        if !@checkmate
+          pos = get_input(player.pieces)
+          toggle_moves(pos)
+        end
         @status = 'selected'
       elsif @status == 'selected'
-        puts "Choose a move, 'save' to save game"
+        puts "Choose a move"
         move = get_input(get_moves(@board.squares[pos].piece,pos))
         move_piece(player,pos,move)
+        plr = plr == 1 ? 2 : 1
         @status = 'unselected'
       end
       @board.draw_board
-      #CHANGE_PLAYER
-      check_check(player)
     end
   end
 
@@ -55,7 +57,11 @@ class Chess
       puts "Player #{player.name} is in CHECK"
       #check_checkmate
       mate = get_moves(king[pos],pos).all? { |pos| op_moves.include?(pos) }
-      puts "CHECKMATE" if mate
+      if mate
+        puts "CHECKMATE"
+        @checkmate = true
+      end
+
     end
     #get_moves(king[pos],pos)
     return mate

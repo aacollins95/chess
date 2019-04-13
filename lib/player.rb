@@ -14,4 +14,7 @@ class Player
     @pieces.delete(pos)
   end
 
+  def load_pieces(pcs)
+    @pieces = pcs
+  end
 end

@@ -36,4 +36,8 @@ class Board
     return ("A".ord + row).chr
   end
 
+  def load_board(sqrs)
+    @squares = sqrs
+  end
+
 end
